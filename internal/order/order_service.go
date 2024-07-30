@@ -3,16 +3,16 @@ package service
 import (
 	"context"
 	"fmt"
-	"wire-example/cache"
-	"wire-example/database"
+	"wire-example/ioc"
+	"wire-example/pkg/database"
 )
 
 type OrderService struct {
 	db    *database.Database
-	cache cache.ICache
+	cache ioc.ICache
 }
 
-func NewOrderService(db *database.Database, cache cache.ICache) *OrderService {
+func NewOrderService(db *database.Database, cache ioc.ICache) *OrderService {
 	return &OrderService{
 		db:    db,
 		cache: cache,
