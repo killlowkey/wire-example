@@ -10,6 +10,7 @@ import (
 	"github.com/google/wire"
 	"wire-example/app"
 	"wire-example/cache"
+	"wire-example/cron"
 	"wire-example/database"
 	"wire-example/service"
 )
@@ -24,7 +25,10 @@ func InitializeApp(dsn string) (*app.App, error) {
 	iCache := cache.NewRedisCache()
 	userService := service.NewUserService(databaseDatabase, iCache)
 	orderService := service.NewOrderService(databaseDatabase, iCache)
-	appApp := app.NewApp(userService, orderService)
+	cronCron := &cron.Cron{
+		Cache: iCache,
+	}
+	appApp := app.NewApp(userService, orderService, cronCron)
 	return appApp, nil
 }
 
