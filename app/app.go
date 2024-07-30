@@ -5,13 +5,18 @@ import (
 )
 
 type App struct {
-	Service *service.Service
+	userService  *service.UserService
+	orderService *service.OrderService
 }
 
-func NewApp(service *service.Service) *App {
-	return &App{Service: service}
+func NewApp(userService *service.UserService, orderService *service.OrderService) *App {
+	return &App{
+		userService:  userService,
+		orderService: orderService,
+	}
 }
 
 func (a *App) Run() {
-	a.Service.Serve()
+	a.userService.Serve()
+	a.orderService.Serve()
 }

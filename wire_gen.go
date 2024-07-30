@@ -7,7 +7,9 @@
 package main
 
 import (
+	"github.com/google/wire"
 	"wire-example/app"
+	"wire-example/cache"
 	"wire-example/database"
 	"wire-example/service"
 )
@@ -19,7 +21,13 @@ func InitializeApp(dsn string) (*app.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	serviceService := service.NewService(databaseDatabase)
-	appApp := app.NewApp(serviceService)
+	iCache := cache.NewRedisCache()
+	userService := service.NewUserService(databaseDatabase, iCache)
+	orderService := service.NewOrderService(databaseDatabase, iCache)
+	appApp := app.NewApp(userService, orderService)
 	return appApp, nil
 }
+
+// wire.go:
+
+var BaseSet = wire.NewSet(database.NewDatabase, cache.NewRedisCache)
