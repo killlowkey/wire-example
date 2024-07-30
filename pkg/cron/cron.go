@@ -3,7 +3,7 @@ package cron
 import (
 	"context"
 	"fmt"
-	"wire-example/cache"
+	"wire-example/pkg/cache"
 )
 
 type Cron struct {

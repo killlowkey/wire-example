@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"wire-example/ioc"
 )
 
 func main() {
-	app, err := InitializeApp("user:password@/dbname")
+	app, err := ioc.InitializeApp()
 	if err != nil {
 		fmt.Println("Failed to initialize app:", err)
 		return

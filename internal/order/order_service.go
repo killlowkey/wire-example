@@ -1,25 +1,25 @@
-package service
+package order
 
 import (
 	"context"
 	"fmt"
-	"wire-example/ioc"
-	"wire-example/pkg/database"
+	"wire-example/pkg/cache"
+	"wire-example/pkg/db"
 )
 
-type OrderService struct {
-	db    *database.Database
-	cache ioc.ICache
+type Service struct {
+	db    *db.Database
+	cache cache.ICache
 }
 
-func NewOrderService(db *database.Database, cache ioc.ICache) *OrderService {
-	return &OrderService{
+func NewOrderService(db *db.Database, cache cache.ICache) *Service {
+	return &Service{
 		db:    db,
 		cache: cache,
 	}
 }
 
-func (o *OrderService) Serve() {
+func (o *Service) Serve() {
 	fmt.Println("OrderService is serving with database:", o.db.DSN)
 	val, _ := o.cache.Get(context.TODO(), "OrderService")
 	fmt.Println("OrderService is serving with cache:", val)
